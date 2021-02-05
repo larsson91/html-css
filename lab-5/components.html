@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>My awesome site!</title>
+  <style>
+    .image-wrapper {
+      position: relative;
+    }
+
+    .portrait {
+      width: 300px;
+    }
+
+    .title {
+      position: absolute;
+      bottom: 9px;
+      left: 0;
+      background: rgba(0, 0, 0, .8);
+      padding: 16px;
+      color: aliceblue;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="image-wrapper">
+    <img class="portrait" src="./mycard-the-joker.jpg">
+    <a class="title" href="https://en.wikipedia.org/wiki/Joker_(character)">Joker</a>
+  </div>
+
+  <member-portrait title="Joker" img="./mycard-the-joker.jpg" href="https://en.wikipedia.org/wiki/Joker_(character)"></member-portrait>
+
+  <script>
+    // Create a class for the element
+    class PortraitComponent extends HTMLElement {
+      constructor() {
+        super();
+
+        // Create a shadow root
+        const shadow = this.attachShadow({
+          mode: 'open'
+        });
+        shadow.innerHTML =
+          `
+            <style>
+                a { color: red }
+            </style>
+        `;
+
+        // Create a link to the movie.
+        const link = document.createElement('a');
+        link.href = '#';
+        link.innerText = this.getAttribute('title');
+
+        link.addEventListener('click', () => {
+          console.log('Clicking!');
+        });
+
+        // Add the link to the shadow root.
+        shadow.appendChild(link);
+      }
+    }
+
+    // Define the new element
+    customElements.define('member-portrait', PortraitComponent);
+
+  </script>
+
+</body>
+
+</html>
